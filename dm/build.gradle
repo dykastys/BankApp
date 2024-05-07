@@ -1,0 +1,68 @@
+buildscript {
+	ext {
+		liquibaseVersion = "4.27.0"
+		kotlinVersion = "1.9.23"
+		postgresqlVersion = "42.7.3"
+		openapiVersion = "2.5.0"
+		kotlinLoggingVersion = "3.0.5"
+		jacksonVersion = "2.17.0"
+		testContainerVersion = "1.19.7"
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '3.2.4'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id 'org.jetbrains.kotlin.jvm' version '1.9.23'
+	id 'org.jetbrains.kotlin.plugin.spring' version '1.9.23'
+	id 'org.jetbrains.kotlin.plugin.jpa' version '1.9.23'
+	id 'org.jetbrains.kotlin.kapt' version '1.9.23'
+	id 'jacoco'
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+
+bootJar {
+	archiveFileName = "dm.jar"
+}
+
+group = 'ru.fillit.mdma'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+	implementation 'org.jetbrains.kotlin:kotlin-reflect'
+
+	implementation "org.postgresql:postgresql:$postgresqlVersion"
+	runtimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+	implementation "io.github.microutils:kotlin-logging:$kotlinLoggingVersion"
+
+	implementation "org.liquibase:liquibase-core:$liquibaseVersion"
+	implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$openapiVersion"
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation "org.testcontainers:testcontainers:$testContainerVersion"
+	testImplementation "org.testcontainers:postgresql:$testContainerVersion"
+}
+
+compileKotlin {
+	kotlinOptions {
+		freeCompilerArgs += '-Xjsr305=strict'
+		jvmTarget = '17'
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

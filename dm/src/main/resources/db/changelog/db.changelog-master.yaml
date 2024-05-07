@@ -1,0 +1,13 @@
+databaseChangeLog:
+- include:
+    file: db/changelog/migrations/create-tables.sql
+- include:
+    file: db/changelog/migrations/insert-data-in-client.sql
+- include:
+    file: db/changelog/migrations/insert-data-in-contact.sql
+- include:
+    file: db/changelog/migrations/insert-data-into-account.sql
+- include:
+    file: db/changelog/migrations/inser-data-in-account_balance.sql
+- include:
+    file: db/changelog/migrations/insert-data-to-operation.sql
